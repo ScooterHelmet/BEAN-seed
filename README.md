@@ -33,6 +33,10 @@ https://github.com/ethereum/solidity
 npm install -g solc
 ```
 
+```bash
+npm install
+```
+
 ## Remixd IDE
 RemixIDE on localhost - https://github.com/ethereum/browser-solidity
 
