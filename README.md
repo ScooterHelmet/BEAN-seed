@@ -21,7 +21,7 @@ Ethstats-cli 2.1.2 or higher
 
 ## Installation
 
-**BEFORE YOU INSTALL:** please read the [prerequisites](#prerequisites)
+**INSTALLS:**
 Angular-cli
 ```bash
 npm install -g @angular/cli
@@ -29,6 +29,10 @@ npm install -g @angular/cli
 Solidity Compiler
 ```bash
 npm install -g solc
+```
+Ganache-cli
+```bash
+npm install -g ganache-cli
 ```
 
 ## Remixd IDE - 
