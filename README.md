@@ -61,13 +61,6 @@ Remix server on localhost - https://github.com/ethereum/remixd
 ```bash
 npm install -g remixd
 ```
-
-## Unit Testing Framework 
-Truffle - development environment, testing framework and asset pipeline for Ethereum. </br> https://github.com/trufflesuite/truffle
-```bash
-npm install -g truffle
-```
-
 ## DApp Testing
  Web3js - Ethereum Javascript API </br>
  https://github.com/ethereum/web3.js/
