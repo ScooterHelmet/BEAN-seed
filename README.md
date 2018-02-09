@@ -30,7 +30,7 @@ Solidity Compiler </br>
 ```bash
 npm install -g solc
 ```
-Ganache-cli
+Ganache-cli (recommended GUI http://truffleframework.com/ganache/)
 ```bash
 npm install -g ganache-cli
 ```
