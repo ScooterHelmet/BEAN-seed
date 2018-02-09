@@ -21,19 +21,22 @@ Ethstats-cli 2.1.2 or higher </br>
 
 ## Installation
 
-**INSTALLS:**
+**INSTALLS:** </br>
 Angular-cli
 ```bash
 npm install -g @angular/cli
 ```
 Solidity Compiler </br>
-https://github.com/ethereum/solidity
 ```bash
 npm install -g solc
 ```
 Ganache-cli
 ```bash
 npm install -g ganache-cli
+```
+Truffle
+```bash
+npm install -g truffle
 ```
 
 ```bash
