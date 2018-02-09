@@ -4,18 +4,18 @@ BEAN - Blockchain, Express, Angular, and Node.js
 An blockchain javascript stack for developing decentralized applications
 ## Prerequisites
 
-Node 8.9.4 or higher
-Angular-cli 1.6.7 or higher
-Solc-js 0.4.19 or higher
-Ethereum Node 1.7.3-stable or higher
-Ethstats-cli 2.1.2 or higher
+Node 8.9.4 or higher </br>
+Angular-cli 1.6.7 or higher </br>
+Solc-js 0.4.19 or higher </br>
+Ethereum Node 1.7.3-stable or higher </br>
+Ethstats-cli 2.1.2 or higher </br>
 
 ## Table of Contents
 
 * [Installation](#installation)
 * [Remixd IDE](#remixd-ide)
 * [Unit Testing Framework](#unit-testing-framework)
-* [API/DApp Testing](#api-testing-tool)
+* [DApp Testing](#dapp-testing)
 * [Ethereum DApp Analytics](#ethereum-dapp-analytics)
 * [Useful Links](#useful-links)
 
@@ -26,7 +26,8 @@ Angular-cli
 ```bash
 npm install -g @angular/cli
 ```
-Solidity Compiler
+Solidity Compiler </br>
+https://github.com/ethereum/solidity
 ```bash
 npm install -g solc
 ```
@@ -35,7 +36,11 @@ Ganache-cli
 npm install -g ganache-cli
 ```
 
-## Remixd IDE - 
+```bash
+npm install
+```
+
+## Remixd IDE
 RemixIDE on localhost - https://github.com/ethereum/browser-solidity
 
 Remix server on localhost - https://github.com/ethereum/remixd
@@ -43,42 +48,46 @@ Remix server on localhost - https://github.com/ethereum/remixd
 npm install -g remixd
 ```
 
-## Unit Testing Framework
-https://github.com/trufflesuite/truffle
+## Unit Testing Framework 
+Truffle - development environment, testing framework and asset pipeline for Ethereum. </br> https://github.com/trufflesuite/truffle
 ```bash
 npm install -g truffle
 ```
 
-## API/DApp Testing
- Web3js - Ethereum Javascript API
+## DApp Testing
+ Web3js - Ethereum Javascript API </br>
+ https://github.com/ethereum/web3.js/
  ```bash
  npm install -g web3
  ```
-Metamask - Ethereum dApps right in your browser without running a full Ethereum node
-See installation at https://metamask.io/
+Metamask - Ethereum dApps right in your browser without running a full Ethereum node </br>
+https://github.com/MetaMask </br>
+See installation at https://metamask.io/ </br>
 
-Solidity-repl - Unit Testing HTTP JSON RPC
-See installation at https://www.npmjs.com/package/solidity-repl
+Solidity-repl - Unit Testing HTTP JSON RPC </br>
+https://github.com/raineorshine/solidity-repl </br>
+See more installation at https://www.npmjs.com/package/solidity-repl </br>
 
-Dapp Tools - Build, test, deploy and transact with Ethereum contracts from the CLI
+Dapp Tools - Build, test, deploy and transact with Ethereum contracts from the CLI </br>
+https://github.com/dapphub/dapp </br>
 See here https://dapp.tools/ 
 
-
 ## Ethereum DApp Analytics
-Etherscan - The Ethereum BlockChain Explorer, API and Analytics Platform.
-Debugging here https://etherscan.io/
-
-Solgraph - Smart contract security analytics
+Etherscan - The Ethereum BlockChain Explorer, API and Analytics Platform. </br>
+Debugging here https://etherscan.io/ </br>
+</br>
+Solgraph - Smart contract security analytics </br>
+https://github.com/raineorshine/solgraph </br>
 ```bash
 npm install -g solgraph
 ```
 
 ## Useful Links
-DApp Hub - Blockchain DApp governance with DSAuth, DSMath, DS token box, & more.
+DApp Hub - Blockchain DApp governance with DSAuth, DSMath, DS token box, & more. </br>
 See here https://dapphub.com/ 
 
-Ethereum DApp name registration 
+Ethereum DApp name registration </br>
 See here https://www.myetherwallet.com/#domainsale
 
-Mist Browser - Browse and use Ðapps on the Ethereum network.
+Mist Browser - Browse and use Ðapps on the Ethereum network. </br>
 https://github.com/ethereum/mist/releases
