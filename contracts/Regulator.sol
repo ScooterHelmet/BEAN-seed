@@ -1,6 +1,6 @@
 pragma solidity ^0.4.17;
 
-import "./ClinicalTrial.sol";
+import "./ServiceCenter.sol";
 
 contract Regulator {
 
@@ -13,36 +13,36 @@ contract Regulator {
    event ProposalAccepted (address msgSender,bytes32 msg,uint timestamp);
    event ProposalRejected (address msgSender,bytes32 msg,uint timestamp);
 
-   event AddCRO (address msgSender,bytes32 msg,uint timestamp);
-   event UpdateCROStatus (address msgSender,bytes32 msg,uint timestamp);
+   event AddAMRA (address msgSender,bytes32 msg,uint timestamp);
+   event UpdateAMRAStatus (address msgSender,bytes32 msg,uint timestamp);
    event RegulatoryContractDeployed (address msgSender,bytes32 msg,uint timestamp);
-   event ClinicalTrialContractDeployed (address msgSender,bytes32 msg,uint timestamp);
-   event UploadTrialProtocol (address msgSender,bytes msg,uint timestamp);
+   event ServiceCenterContractDeployed (address msgSender,bytes32 msg,uint timestamp);
+   event UploadCenterProtocol (address msgSender,bytes msg,uint timestamp);
 
-   struct CroIdentity {
+   struct AMRAIdentity {
       bytes32  name;
       bytes32  url;
       address addr;
       int   status;  //values: SUBMITTED, ACCEPTED, REJECTED
    }
 
-   struct TrialProposal {
-      address croAddr;
+   struct CenterProposal {
+      address AMRAAddr;
       bytes32  drugName;
       uint32  startDate;
       uint32  endDate;
       bytes  ipfsHash;
       int   status; // values: SUBMITTED, ACCEPTED, REJECTED
-      address trial;  // clinical trial contract; 0x0 if none
+      address Center;  // clinical Center contract; 0x0 if none
    }
 
-   CroIdentity[]cros;
-   TrialProposal[]proposals;
+   AMRAIdentity[]AMRAs;
+   CenterProposal[]proposals;
 
-   modifier crosOnly {
+   modifier AMRAsOnly {
       bool found = false;
-      for (uint32 i = 0; i < cros.length; i++) {
-         if (cros[i].addr == msg.sender && cros[i].status == STATUS_ACCEPTED) {
+      for (uint32 i = 0; i < AMRAs.length; i++) {
+         if (AMRAs[i].addr == msg.sender && AMRAs[i].status == STATUS_ACCEPTED) {
             found = true;
             break;
          }
@@ -65,8 +65,8 @@ contract Regulator {
 
    function submitProposal(bytes32 _drugName, uint32 _startDate, uint32 _endDate) {
 
-      TrialProposal memory proposal;
-      proposal.croAddr   = msg.sender;
+      CenterProposal memory proposal;
+      proposal.AMRAAddr   = msg.sender;
       proposal.drugName  = _drugName;
       proposal.startDate = _startDate;
       proposal.endDate   = _endDate;
@@ -77,55 +77,55 @@ contract Regulator {
       ProposalSubmitted(msg.sender,proposal.drugName,block.timestamp);
    }
 
-   function submitTrialProtocolDocument(uint32 _id, bytes _docHash) constant returns (bytes _docIpfsHash) {
+   function submitCenterProtocolDocument(uint32 _id, bytes _docHash) constant returns (bytes _docIpfsHash) {
       if (_id >= proposals.length) {
          return;
       }
-      TrialProposal memory tp = proposals[_id];
+      CenterProposal memory tp = proposals[_id];
       tp.ipfsHash = _docHash;
       _docIpfsHash = tp.ipfsHash;
-      UploadTrialProtocol (msg.sender,tp.ipfsHash,block.timestamp);
+      UploadCenterProtocol (msg.sender,tp.ipfsHash,block.timestamp);
    }
 
    function getProposalsCount() constant returns (uint _counter) {
       _counter = proposals.length;
    }
 
-   function getProposalById(uint32 _id) constant returns(address _croAddr, bytes32 _drugName, uint32 _startDate, uint32 _endDate, bytes _ipfsHash, int _status, address _trial) {
+   function getProposalById(uint32 _id) constant returns(address _AMRAAddr, bytes32 _drugName, uint32 _startDate, uint32 _endDate, bytes _ipfsHash, int _status, address _Center) {
       if (_id >= proposals.length) {
          return;
       }
-      TrialProposal memory tp = proposals[_id];
-      _croAddr = tp.croAddr;
+      CenterProposal memory tp = proposals[_id];
+      _AMRAAddr = tp.AMRAAddr;
       _drugName = tp.drugName;
       _startDate = tp.startDate;
       _endDate = tp.endDate;
       _ipfsHash = tp.ipfsHash;
       _status = tp.status;
-      _trial = tp.trial;
+      _Center = tp.Center;
    }
 
-   function acceptProposal(uint _id) constant returns (address _clinicalTrial) {
+   function acceptProposal(uint _id) constant returns (address _ServiceCenter) {
 
       if(_id >= proposals.length) {
          revert();
       }
 
-      TrialProposal memory tp = proposals[_id];
+      CenterProposal memory tp = proposals[_id];
       if (tp.status == STATUS_ACCEPTED) {
          revert();
       }
 
-      // deploy the actual clinical trial contract and return it
-      ClinicalTrial trial = new ClinicalTrial(owner, tp.croAddr, _id, tp.startDate, tp.endDate, tp.drugName, tp.ipfsHash);
+      // deploy the actual clinical Center contract and return it
+      ServiceCenter Center = new ServiceCenter(owner, tp.AMRAAddr, _id, tp.startDate, tp.endDate, tp.drugName, tp.ipfsHash);
 
-      proposals[_id].trial = trial;
+      proposals[_id].Center = Center;
       proposals[_id].status = STATUS_ACCEPTED;
 
-      _clinicalTrial = proposals[_id].trial;
+      _ServiceCenter = proposals[_id].Center;
 
       ProposalAccepted (msg.sender,tp.drugName,block.timestamp);
-      ClinicalTrialContractDeployed (msg.sender,"Mined",block.timestamp);
+      ServiceCenterContractDeployed (msg.sender,"Mined",block.timestamp);
    }
 
    function rejectProposal(uint _id) {
@@ -136,30 +136,30 @@ contract Regulator {
 
       proposals[_id].status = STATUS_REJECTED;
 
-      TrialProposal memory tp = proposals[_id];
-      ProposalRejected (tp.croAddr, tp.drugName, _id);
+      CenterProposal memory tp = proposals[_id];
+      ProposalRejected (tp.AMRAAddr, tp.drugName, _id);
    }
 
-   function submitCro(bytes32 _name, bytes32 _url) {
-      CroIdentity memory cro;
-      cro.name = _name;
-      cro.url = _url;
-      cro.addr = msg.sender;
-      cro.status = STATUS_SUBMITTED;
+   function submitAMRA(bytes32 _name, bytes32 _url) {
+      AMRAIdentity memory AMRA;
+      AMRA.name = _name;
+      AMRA.url = _url;
+      AMRA.addr = msg.sender;
+      AMRA.status = STATUS_SUBMITTED;
 
-      cros.push(cro);
+      AMRAs.push(AMRA);
 
-      AddCRO(msg.sender,cro.name,block.timestamp);
+      AddAMRA(msg.sender,AMRA.name,block.timestamp);
    }
 
-   function changeCroStatus(address _addr, uint8 _status) {
-      for (uint32 i = 0; i < cros.length; i++) {
-         if (cros[i].addr == _addr) {
-            cros[i].status = _status;
-            if (cros[i].status == STATUS_ACCEPTED) {
-               UpdateCROStatus(msg.sender,"Approved",block.timestamp);
+   function changeAMRAStatus(address _addr, uint8 _status) {
+      for (uint32 i = 0; i < AMRAs.length; i++) {
+         if (AMRAs[i].addr == _addr) {
+            AMRAs[i].status = _status;
+            if (AMRAs[i].status == STATUS_ACCEPTED) {
+               UpdateAMRAStatus(msg.sender,"Approved",block.timestamp);
             } else {
-               UpdateCROStatus(msg.sender,"Rejected",block.timestamp);
+               UpdateAMRAStatus(msg.sender,"Rejected",block.timestamp);
             }
             break;
          }
@@ -167,17 +167,17 @@ contract Regulator {
       
    }
 
-   function getCrosCounter() constant returns (uint _counter) {
-      _counter = cros.length;
+   function getAMRAsCounter() constant returns (uint _counter) {
+      _counter = AMRAs.length;
    }
 
-   function getCroById(uint _id) constant returns(bytes32 _name, bytes32 _url, address _addr, int _status) {
+   function getAMRAById(uint _id) constant returns(bytes32 _name, bytes32 _url, address _addr, int _status) {
 
-      if (_id >= cros.length) {
+      if (_id >= AMRAs.length) {
          revert();
       }
 
-      CroIdentity memory ci = cros[_id];
+      AMRAIdentity memory ci = AMRAs[_id];
       _name = ci.name;
       _url = ci.url;
       _addr = ci.addr;

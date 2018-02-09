@@ -52,7 +52,12 @@ truffle migrate
 ```bash
 truffle serve -p 8081
 ```
-Navigate to http://localhost:8081
+Navigate to http://localhost:8081 </br>
+**Start Angular2 app** </br>
+```bash
+ng serve
+```
+Navigate to http://localhost:4200 </br>
 
 ## Remixd IDE
 RemixIDE on localhost - https://github.com/ethereum/browser-solidity
