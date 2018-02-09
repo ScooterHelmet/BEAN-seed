@@ -16,7 +16,7 @@ module.exports = {
   networks: {
     development: {
       host: "localhost",
-      port: 8545,
+      port: 8545, // Default Metamask port | Default Ganache port: 7545
       network_id: "*" // Match any network id
     }
   }
