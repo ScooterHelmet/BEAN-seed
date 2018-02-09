@@ -5,10 +5,6 @@ An blockchain javascript stack for developing decentralized applications
 ## Prerequisites
 
 Node 8.9.4 or higher </br>
-Angular-cli 1.6.7 or higher </br>
-Solc-js 0.4.19 or higher </br>
-Ethereum Node 1.7.3-stable or higher </br>
-Ethstats-cli 2.1.2 or higher </br>
 
 ## Table of Contents
 
@@ -42,7 +38,21 @@ npm install -g truffle
 git clone https://github.com/ScooterHelmet/BEAN-seed.git
 npm install
 ```
-You are all set!
+You are all set! </br>
+
+**Run the Blockchain (CLI)** </br>
+```bash
+ganache-cli --accounts 5 --blocktime 10 --port 7545 --gasPrice 20000000 --gasLimit 60000 --debug
+```
+**Deploy the DApp contracts in new command shell window or tab** </br>
+```bash
+truffle migrate
+```
+**Start the DApp** </br>
+```bash
+truffle serve -p 8081
+```
+Navigate to http://localhost:8081
 
 ## Remixd IDE
 RemixIDE on localhost - https://github.com/ethereum/browser-solidity
