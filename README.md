@@ -38,10 +38,11 @@ Truffle
 ```bash
 npm install -g truffle
 ```
-
 ```bash
+git clone https://github.com/ScooterHelmet/BEAN-seed.git
 npm install
 ```
+You are all set!
 
 ## Remixd IDE
 RemixIDE on localhost - https://github.com/ethereum/browser-solidity
