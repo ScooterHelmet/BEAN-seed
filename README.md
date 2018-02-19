@@ -34,17 +34,22 @@ Truffle
 ```bash
 npm install -g truffle
 ```
+Clone Project and Install dependencies
 ```bash
 git clone https://github.com/ScooterHelmet/BEAN-seed.git
 npm install
 ```
 You are all set! </br>
 
-**Run the Blockchain (CLI)** </br>
+**Run the Local Blockchain (CLI)** </br>
 ```bash
 ganache-cli --accounts 5 --blocktime 10 --port 7545 --gasPrice 20000000 --gasLimit 60000 --debug
 ```
-**Deploy the DApp contracts in new command shell window or tab** </br>
+**Compile the DApp contracts in new command shell window or tab** </br>
+```bash
+truffle compile
+```
+**Deploy the DApp contracts in the command shell window or tab**</br>
 ```bash
 truffle migrate
 ```
