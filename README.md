@@ -72,45 +72,64 @@ npm install -g remixd
 ```
 ## Ethereum DApp RPC Clients and Tools for DApp Unit Testing and Regression Testing
 Web3js - Ethereum Javascript API </br>
-https://github.com/ethereum/web3.js/
+See Github project here: https://github.com/ethereum/web3.js/
 ```bash
 npm install -g web3
 ```
-Ganache-cli - (recommended GUI http://truffleframework.com/ganache/)
+
+Ganache-cli - Fast Ethereum RPC client for testing and development
+Installation here: http://truffleframework.com/ganache/
 ```bash
 npm install -g ganache-cli
 ```
+
+Truffle - DApp development framework </br>
+See Github project here: https://github.com/trufflesuite/truffle </br>
+See website here: http://truffleframework.com/ </br>
+```bash
+npm install -g truffle
+```
+
 </br>
 Metamask - Ethereum dApps right in your browser without running a full Ethereum node </br>
 https://github.com/MetaMask </br>
-See installation at https://metamask.io/ </br>
+See installation: https://metamask.io/ </br>
 </br>
+
 Solidity-repl - Unit Testing HTTP JSON RPC </br>
-https://github.com/raineorshine/solidity-repl </br>
-See more installation at https://www.npmjs.com/package/solidity-repl </br>
+See Github project here: https://github.com/raineorshine/solidity-repl </br>
+See node package here: https://www.npmjs.com/package/solidity-repl </br>
 </br>
+
 Dapp Tools - Build, test, deploy and transact with Ethereum contracts from the CLI </br>
-https://github.com/dapphub/dapp </br>
-See here https://dapp.tools/ 
+See Github project here: https://github.com/dapphub/dapp </br>
+See website here: https://dapp.tools/</br>
+</br>
+
+DApp Hub - Blockchain DApp governance with DSAuth, DSMath, DS token box, & more. </br>
+See website here: https://dapphub.com/  
 
 ## Ethereum DApp Analytics
 Etherscan - The Ethereum BlockChain Explorer, API and Analytics Platform. </br>
-Debugging here https://etherscan.io/ </br>
+See website here: https://etherscan.io/ </br>
 </br>
+
 Solgraph - Smart contract security analytics </br>
-https://github.com/raineorshine/solgraph </br>
+See Github project here: https://github.com/raineorshine/solgraph </br>
+See Node package here: https://www.npmjs.com/package/solgraph </br>
 ```bash
 npm install -g solgraph
 ```
 
 ## Ethereum DApp Scaling
-μRaiden (micro raiden) - A payment channel framework for fast & free off-chain ERC20 token transfers.
-https://github.com/raiden-network/microraiden
-See here: https://www.npmjs.com/package/@raiden_network/microraiden
-See here: https://raiden.network/micro.html
+μRaiden (micro raiden) - A payment channel framework for fast & free off-chain ERC20 token transfers. </br>
+See Github project here: https://github.com/raiden-network/microraiden </br>
+See Node package here: https://www.npmjs.com/package/@raiden_network/microraiden</br>
+See website here: https://raiden.network/micro.html</br>
 
 ## Ethereum DApp File Storage
-Interplanetory File System (IPFS) - Install here: https://ipfs.io/docs/install/
+Interplanetory File System (IPFS) - A P2P hypermedia protocol. </br>
+Installation here: https://ipfs.io/docs/install/
 ```bash
 tar xvfz go-ipfs.tar.gz
 mv go-ipfs/ipfs /usr/local/bin/ipfs
@@ -118,13 +137,12 @@ ipfs init
 ```
 
 ## Useful Links
-DApp Hub - Blockchain DApp governance with DSAuth, DSMath, DS token box, & more. </br>
-See here https://dapphub.com/ 
+
 
 Ethereum DApp name registration </br>
 See here https://www.myetherwallet.com/#domainsale
 
 Mist Browser - Browse and use Ðapps on the Ethereum network. </br>
-https://github.com/ethereum/mist/releases
+See Github project here: https://github.com/ethereum/mist/releases
 
 
