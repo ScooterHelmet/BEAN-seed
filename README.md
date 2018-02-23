@@ -64,27 +64,31 @@ ng serve
 ```
 Navigate to http://localhost:4200 </br>
 
-## Remixd IDE
-RemixIDE on localhost - https://github.com/ethereum/browser-solidity
-
+## Ethereum Smart Contract Editor, Compiler, and Deployment
+RemixIDE on localhost - https://github.com/ethereum/browser-solidity </br>
 Remix server on localhost - https://github.com/ethereum/remixd
 ```bash
 npm install -g remixd
 ```
-## DApp Testing
- Web3js - Ethereum Javascript API </br>
- https://github.com/ethereum/web3.js/
- ```bash
- npm install -g web3
- ```
+## Ethereum DApp RPC Clients and Tools for DApp Unit Testing and Regression Testing
+Web3js - Ethereum Javascript API </br>
+https://github.com/ethereum/web3.js/
+```bash
+npm install -g web3
+```
+Ganache-cli - (recommended GUI http://truffleframework.com/ganache/)
+```bash
+npm install -g ganache-cli
+```
+</br>
 Metamask - Ethereum dApps right in your browser without running a full Ethereum node </br>
 https://github.com/MetaMask </br>
 See installation at https://metamask.io/ </br>
-
+</br>
 Solidity-repl - Unit Testing HTTP JSON RPC </br>
 https://github.com/raineorshine/solidity-repl </br>
 See more installation at https://www.npmjs.com/package/solidity-repl </br>
-
+</br>
 Dapp Tools - Build, test, deploy and transact with Ethereum contracts from the CLI </br>
 https://github.com/dapphub/dapp </br>
 See here https://dapp.tools/ 
@@ -104,6 +108,14 @@ npm install -g solgraph
 https://github.com/raiden-network/microraiden
 See here: https://www.npmjs.com/package/@raiden_network/microraiden
 See here: https://raiden.network/micro.html
+
+## Ethereum DApp File Storage
+Interplanetory File System (IPFS) - Install here: https://ipfs.io/docs/install/
+```bash
+tar xvfz go-ipfs.tar.gz
+mv go-ipfs/ipfs /usr/local/bin/ipfs
+ipfs init
+```
 
 ## Useful Links
 DApp Hub - Blockchain DApp governance with DSAuth, DSMath, DS token box, & more. </br>
