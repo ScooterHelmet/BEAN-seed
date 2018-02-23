@@ -99,6 +99,12 @@ https://github.com/raineorshine/solgraph </br>
 npm install -g solgraph
 ```
 
+## Ethereum DApp Scaling
+μRaiden (micro raiden) - A payment channel framework for fast & free off-chain ERC20 token transfers.
+https://github.com/raiden-network/microraiden
+See here: https://www.npmjs.com/package/@raiden_network/microraiden
+See here: https://raiden.network/micro.html
+
 ## Useful Links
 DApp Hub - Blockchain DApp governance with DSAuth, DSMath, DS token box, & more. </br>
 See here https://dapphub.com/ 
@@ -108,3 +114,5 @@ See here https://www.myetherwallet.com/#domainsale
 
 Mist Browser - Browse and use Ðapps on the Ethereum network. </br>
 https://github.com/ethereum/mist/releases
+
+
