@@ -9,10 +9,11 @@ Node 8.9.4 or higher </br>
 ## Table of Contents
 
 * [Installation](#installation)
-* [Remixd IDE](#remixd-ide)
-* [Unit Testing Framework](#unit-testing-framework)
-* [DApp Testing](#dapp-testing)
+* [Ethereum Smart Contract Editor, Compiler, and Deployment](#ethereum-smart-contract-editor-compiler-and-deployment)
+* [Ethereum DApp RPC Clients and Tools for DApp Unit Testing and Regression Testing](#ethereum-dapp-rpc-clients-and-tools-for-dapp-unit-testing-and-regression-testing)
 * [Ethereum DApp Analytics](#ethereum-dapp-analytics)
+* [Ethereum DApp Scaling](#ethereum-dapp-scaling)
+* [Ethereum DApp File Storage](#ethereum-dapp-file-storage)
 * [Useful Links](#useful-links)
 
 ## Installation
@@ -97,11 +98,6 @@ https://github.com/MetaMask</br>
 See installation: https://metamask.io/</br>
 </br>
 
-Solidity-repl - Unit Testing HTTP JSON RPC</br>
-See Github project here: https://github.com/raineorshine/solidity-repl</br>
-See node package here: https://www.npmjs.com/package/solidity-repl</br>
-</br>
-
 Dapp Tools - Build, test, deploy and transact with Ethereum contracts from the CLI</br>
 See Github project here: https://github.com/dapphub/dapp</br>
 See website here: https://dapp.tools/</br>
@@ -114,13 +110,6 @@ See website here: https://dapphub.com/</br>
 Etherscan - The Ethereum BlockChain Explorer, API and Analytics Platform.</br>
 See website here: https://etherscan.io/</br>
 </br>
-
-Solgraph - Smart contract security analytics </br>
-See Github project here: https://github.com/raineorshine/solgraph </br>
-See Node package here: https://www.npmjs.com/package/solgraph </br>
-```bash
-npm install -g solgraph
-```
 
 ## Ethereum DApp Scaling
 μRaiden (micro raiden) - A payment channel framework for fast & free off-chain ERC20 token transfers.</br>
