@@ -1,7 +1,10 @@
 # BEAN-seed
-BEAN - Blockchain, Express, Angular, and Node.js 
+For fun. My attempt at a BEAN - Blockchain, Express, Angular, and Node.js </br>
 
-An blockchain javascript stack for developing decentralized applications
+# My Demo DApp
+
+![Automotive Demo](https://github.com/ScooterHelmet/BEAN-seed/blob/master/Screen%20Shot%202018-03-02%20at%2011.12.24%20PM.png)
+
 ## Prerequisites
 
 Node 8.9.4 or higher </br>
