@@ -134,16 +134,16 @@
                         <div class="panel-body">
                             <div class="demo-content bg-alt">
                                 <div class="form-group">
-                                    <label for="inputDrugName">OEM Part #</label>
-                                    <input type="text" class="form-control" id="inputDrugName" placeholder="Enter OEM Part #">
+                                    <label for="inputOemPart">OEM Part #</label>
+                                    <input type="text" class="form-control" id="inputOemPart" placeholder="Enter OEM Part #">
                                 </div>
                                 <div class="form-group">
-                                    <label for="datepickertrialfrom">Service Date From</label>
-                                    <input type="text" class="form-control" id="datepickertrialfrom" placeholder="Enter Trial Date From">
+                                    <label for="datepickercarefrom">Service Date From</label>
+                                    <input type="text" class="form-control" id="datepickercarefrom" placeholder="Enter care Date From">
                                 </div>
                                 <div class="form-group">
-                                    <label for="datepickertrialto">Service Date To</label>
-                                    <input type="text" class="form-control" id="datepickertrialto" placeholder="Enter Trial Date To">
+                                    <label for="datepickercareto">Service Date To</label>
+                                    <input type="text" class="form-control" id="datepickercareto" placeholder="Enter care Date To">
                                 </div>
                                 <button id="deployCtContract" class="btn btn-primary">Submit Service Appointment</button>
                                 <span class="success" id="submitProposalSuccess"></span>
@@ -178,11 +178,11 @@
                     <div id="collapse4" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div>
-                                <button id="btnTrialDataPharma" class="btn btn-primary">Show Service Center Results</button>
-                                <table id="trialdatatablepharma" class="table table-striped">
+                                <button id="btnCareDataPharma" class="btn btn-primary">Show Service Center Results</button>
+                                <table id="caredatatablepharma" class="table table-striped">
                                     <thead id="traildataheaderpharma">
                                     </thead>
-                                    <tbody id="trialdatabodypharma">
+                                    <tbody id="caredatabodypharma">
                                     </tbody>
                                 </table>
                             </div>
@@ -268,7 +268,7 @@
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <div id="trialproposaldiv" style="display:none;">
+                            <div id="careproposaldiv" style="display:none;">
                                 <table class="table table-striped">
                                     <tbody>
                                         <tr>
@@ -276,7 +276,7 @@
                                         </tr>
                                         <tr>
                                             <td>OEM Part #</td>
-                                            <td id="drugName"></td>
+                                            <td id="oemPart"></td>
                                         </tr>
                                         <tr>
                                             <td>Service Date From</td>
@@ -307,7 +307,7 @@
                                     <span class="success" id="acceptProposalSuccess"></span>
                                 </div>
                                 <div>
-                                    <span class="success" id="clinicalTrialHash"></span>
+                                    <span class="success" id="clinicalCareHash"></span>
                                 </div>
                                 </br>
                                 </br>
@@ -319,11 +319,11 @@
                                             </tr>
                                             <tr>
                                                 <td>Address</td>
-                                                <td id="clinicalTrialAddress"></td>
+                                                <td id="clinicalCareAddress"></td>
                                             </tr>
                                             <tr>
                                                 <td>Transaction Hash</td>
-                                                <td id="clinicalTrialCreationTxnHash">
+                                                <td id="clinicalCareCreationTxnHash">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -394,8 +394,8 @@
                             </div>
                             <div>
                                 <div>
-                                    <!--<h5>Trial Data</h5>-->
-                                    <div id="trialdiv" style="display:none;">
+                                    <!--<h5>Care Data</h5>-->
+                                    <div id="carediv" style="display:none;">
                                         <table id="subjecttable" class="table table-striped">
                                             <thead>
                                                 <th>Name</th>
@@ -422,11 +422,11 @@
                     <div id="collapseFive" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div>
-                                <button id="btnTrialData" class="btn btn-primary">Show Service Center Results</button>
-                                <table id="trialdatatable" class="table table-striped">
+                                <button id="btnCareData" class="btn btn-primary">Show Service Center Results</button>
+                                <table id="caredatatable" class="table table-striped">
                                     <thead id="traildataheader">
                                     </thead>
-                                    <tbody id="trialdatabody">
+                                    <tbody id="caredatabody">
                                     </tbody>
                                 </table>
                             </div>
@@ -543,7 +543,7 @@
         </div>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

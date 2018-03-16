@@ -28,12 +28,12 @@ contract Regulator {
 
    struct CenterProposal {
       address AMRAAddr;
-      bytes32  drugName;
+      bytes32  oemPart;
       uint32  startDate;
       uint32  endDate;
       bytes  ipfsHash;
       int   status; // values: SUBMITTED, ACCEPTED, REJECTED
-      address Center;  // clinical Center contract; 0x0 if none
+      address center;  // service center contract; 0x0 if none
    }
 
    AMRAIdentity[]AMRAs;
@@ -58,26 +58,26 @@ contract Regulator {
       _;
    }
 
-   function Regulator() {
+   function Regulator() public {
       owner = msg.sender;
       RegulatoryContractDeployed(msg.sender,"Mined",block.timestamp);
    }
 
-   function submitProposal(bytes32 _drugName, uint32 _startDate, uint32 _endDate) {
+   function submitProposal(bytes32 _oemPart, uint32 _startDate, uint32 _endDate) public {
 
       CenterProposal memory proposal;
-      proposal.AMRAAddr   = msg.sender;
-      proposal.drugName  = _drugName;
+      proposal.AMRAAddr = msg.sender;
+      proposal.oemPart = _oemPart;
       proposal.startDate = _startDate;
-      proposal.endDate   = _endDate;
-      proposal.status    = STATUS_SUBMITTED;
+      proposal.endDate = _endDate;
+      proposal.status = STATUS_SUBMITTED;
 
       proposals.push(proposal);
 
-      ProposalSubmitted(msg.sender,proposal.drugName,block.timestamp);
+      ProposalSubmitted(msg.sender,proposal.oemPart,block.timestamp);
    }
 
-   function submitCenterProtocolDocument(uint32 _id, bytes _docHash) constant returns (bytes _docIpfsHash) {
+   function submitCenterProtocolDocument(uint32 _id, bytes _docHash) constant public returns (bytes _docIpfsHash) {
       if (_id >= proposals.length) {
          return;
       }
@@ -87,25 +87,25 @@ contract Regulator {
       UploadCenterProtocol (msg.sender,tp.ipfsHash,block.timestamp);
    }
 
-   function getProposalsCount() constant returns (uint _counter) {
+   function getProposalsCount() constant public returns (uint _counter) {
       _counter = proposals.length;
    }
 
-   function getProposalById(uint32 _id) constant returns(address _AMRAAddr, bytes32 _drugName, uint32 _startDate, uint32 _endDate, bytes _ipfsHash, int _status, address _Center) {
+   function getProposalById(uint32 _id) constant public returns(address _AMRAAddr, bytes32 _oemPart, uint32 _startDate, uint32 _endDate, bytes _ipfsHash, int _status, address _center) {
       if (_id >= proposals.length) {
          return;
       }
       CenterProposal memory tp = proposals[_id];
       _AMRAAddr = tp.AMRAAddr;
-      _drugName = tp.drugName;
+      _oemPart = tp.oemPart;
       _startDate = tp.startDate;
       _endDate = tp.endDate;
       _ipfsHash = tp.ipfsHash;
       _status = tp.status;
-      _Center = tp.Center;
+      _center = tp.center;
    }
 
-   function acceptProposal(uint _id) constant returns (address _ServiceCenter) {
+   function acceptProposal(uint _id) constant public returns (address _ServiceCenter) {
 
       if(_id >= proposals.length) {
          revert();
@@ -116,19 +116,19 @@ contract Regulator {
          revert();
       }
 
-      // deploy the actual clinical Center contract and return it
-      ServiceCenter Center = new ServiceCenter(owner, tp.AMRAAddr, _id, tp.startDate, tp.endDate, tp.drugName, tp.ipfsHash);
+      // deploy the actual service center contract and return it
+      ServiceCenter center = new ServiceCenter(owner, tp.AMRAAddr, _id, tp.startDate, tp.endDate, tp.oemPart, tp.ipfsHash);
 
-      proposals[_id].Center = Center;
+      proposals[_id].center = center;
       proposals[_id].status = STATUS_ACCEPTED;
 
-      _ServiceCenter = proposals[_id].Center;
+      _ServiceCenter = proposals[_id].center;
 
-      ProposalAccepted (msg.sender,tp.drugName,block.timestamp);
+      ProposalAccepted (msg.sender,tp.oemPart,block.timestamp);
       ServiceCenterContractDeployed (msg.sender,"Mined",block.timestamp);
    }
 
-   function rejectProposal(uint _id) {
+   function rejectProposal(uint _id) public {
 
       if (_id >= proposals.length) {
          revert();
@@ -137,10 +137,10 @@ contract Regulator {
       proposals[_id].status = STATUS_REJECTED;
 
       CenterProposal memory tp = proposals[_id];
-      ProposalRejected (tp.AMRAAddr, tp.drugName, _id);
+      ProposalRejected (tp.AMRAAddr, tp.oemPart, _id);
    }
 
-   function submitAMRA(bytes32 _name, bytes32 _url) {
+   function submitAMRA(bytes32 _name, bytes32 _url) public {
       AMRAIdentity memory AMRA;
       AMRA.name = _name;
       AMRA.url = _url;
@@ -152,7 +152,7 @@ contract Regulator {
       AddAMRA(msg.sender,AMRA.name,block.timestamp);
    }
 
-   function changeAMRAStatus(address _addr, uint8 _status) {
+   function changeAMRAStatus(address _addr, uint8 _status) public {
       for (uint32 i = 0; i < AMRAs.length; i++) {
          if (AMRAs[i].addr == _addr) {
             AMRAs[i].status = _status;
@@ -167,11 +167,11 @@ contract Regulator {
       
    }
 
-   function getAMRAsCounter() constant returns (uint _counter) {
+   function getAMRAsCounter() constant public returns (uint _counter) {
       _counter = AMRAs.length;
    }
 
-   function getAMRAById(uint _id) constant returns(bytes32 _name, bytes32 _url, address _addr, int _status) {
+   function getAMRAById(uint _id) constant public returns(bytes32 _name, bytes32 _url, address _addr, int _status) {
 
       if (_id >= AMRAs.length) {
          revert();

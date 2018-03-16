@@ -6,7 +6,10 @@ var ctContractAddress;
 var defaultGas = 4700000;
 var userAccounts = [];
 
-var regulatorAccount, croAccount, pharmaAccount, currentAccount;
+var regulatorAccount;
+var croAccount;
+var pharmaAccount;
+var currentAccount;
 var contractAddress = regulatorContractAddress;
 
 var subjects = 10;
@@ -16,7 +19,7 @@ var genderArray = ['Male', 'Female'];
 
 var hostName = "localhost";
 var ipfs = window.IpfsApi(hostName, 5001);
-var trialDocHash;
+var careDocHash;
 var clinicalTrailCreationTxnHash;
 
 
@@ -31,19 +34,22 @@ function hex2string(hex) {
 
 // Initialize
 function deployRegulator() {
-    Regulator.new({ from: currentAccount, gas: defaultGas }).then(
-        function(regInstance) {
-            regulatorInstance = regInstance;
-            regulatorContractAddress = regulatorInstance.address;
-            $('#sectionAAddress').html('<i class="fa fa-address-card"></i> ' + regulatorInstance.address);
-            $('#sectionATxnHash').html('<i class="fa fa-list-alt"></i> ' + regulatorInstance.transactionHash);
-            $('#sectionBAddress').html('<i class="fa fa-address-card"></i> ' + regulatorInstance.address);
-            $('#sectionBTxnHash').html('<i class="fa fa-list-alt"></i> ' + regulatorInstance.transactionHash);
-            $("#deployRegContractSuccess").html('<i class="fa fa-check"</i>' + " Regulatory Contract mined!");
-            $("#deployRegContractSuccess").show().delay(5000).fadeOut();
-            initializeRegulatorEvents();
-        });
-}
+    Regulator.new({ 
+        from: currentAccount, 
+        gas: defaultGas })
+        .then(
+            function(regInstance) {
+                regulatorInstance = regInstance;
+                regulatorContractAddress = regulatorInstance.address;
+                $('#sectionAAddress').html('<i class="fa fa-address-card"></i> ' + regulatorInstance.address);
+                $('#sectionATxnHash').html('<i class="fa fa-list-alt"></i> ' + regulatorInstance.transactionHash);
+                $('#sectionBAddress').html('<i class="fa fa-address-card"></i> ' + regulatorInstance.address);
+                $('#sectionBTxnHash').html('<i class="fa fa-list-alt"></i> ' + regulatorInstance.transactionHash);
+                $("#deployRegContractSuccess").html('<i class="fa fa-check"</i>' + " Regulatory Contract mined!");
+                $("#deployRegContractSuccess").show().delay(5000).fadeOut();
+                initializeRegulatorEvents();
+            });
+        }
 
 function initializeRegulatorEvents() {
     var events = regulatorInstance.allEvents();
@@ -60,8 +66,8 @@ function initializeRegulatorEvents() {
 }
 
 
-function initializeClinicalTrialEvents() {
-    var ct = ClinicalTrial.at(ctContractAddress);
+function initializeClinicalCareEvents() {
+    var ct = ClinicalCare.at(ctContractAddress);
     var events = ct.allEvents();
     events.watch(function(error, result) {
         if (error) {
@@ -126,13 +132,13 @@ function approveCroWithId0() {
 }
 
 function submitProposal() {
-    var drugName = $("#inputDrugName").val();
-    var trialFrom = $("#datepickertrialfrom").val();
-    var trialTo = $("#datepickertrialto").val();
-    var trialFromTs = (moment(trialFrom, "M/D/YYYY").valueOf()) / 1000;
-    var trialToTs = (moment(trialTo, "M/D/YYYY").valueOf()) / 1000;
+    var oemPart = $("#inputOemPart").val();
+    var careFrom = $("#datepickercarefrom").val();
+    var careTo = $("#datepickercareto").val();
+    var careFromTs = (moment(careFrom, "M/D/YYYY").valueOf()) / 1000;
+    var careToTs = (moment(careTo, "M/D/YYYY").valueOf()) / 1000;
 
-    regulatorInstance.submitProposal.sendTransaction(drugName, trialFromTs, trialToTs, { from: croAccount, gas: defaultGas }).then(
+    regulatorInstance.submitProposal.sendTransaction(oemPart, careFromTs, careToTs, { from: croAccount, gas: defaultGas }).then(
         function(txHash) {
             $("#submitProposalSuccess").html('<i class="fa fa-check"</i>' + ' Transaction ' + txHash + " added to the blockchain");
             $("#submitProposalSuccess").show().delay(5000).fadeOut();
@@ -142,19 +148,19 @@ function submitProposal() {
 }
 
 function readProposalById0() {
-    document.getElementById("trialproposaldiv").style.display = "block";
+    document.getElementById("careproposaldiv").style.display = "block";
     regulatorInstance.getProposalById(0).then(function(data) {
-        $("#drugName").html(hex2string(data[1]));
+        $("#oemPart").html(hex2string(data[1]));
         $("#tdfrom").html(moment.unix(data[2].c[0]).format("MM/DD/YYYY"));
         $("#tdto").html(moment.unix(data[3].c[0]).format("MM/DD/YYYY"));
         $("#tdstatus").html(getStatus(data[5].c[0]));
         if (getStatus(data[5].c[0]) == "Approved") {
-            $("#clinicalTrialAddress").html('<i class="fa fa-address-card"></i> ' + data[6]);
-            $("#clinicalTrialCreationTxnHash").html('<i class="fa fa-list-alt"></i> ' + clinicalTrailCreationTxnHash);
-            $("#clinicalTrialHash").html('<i class="fa fa-check"</i>' + " Clinical Trial Contract mined!");
-            $("#clinicalTrialHash").show().delay(5000).fadeOut();
+            $("#clinicalCareAddress").html('<i class="fa fa-address-card"></i> ' + data[6]);
+            $("#clinicalCareCreationTxnHash").html('<i class="fa fa-list-alt"></i> ' + clinicalTrailCreationTxnHash);
+            $("#clinicalCareHash").html('<i class="fa fa-check"</i>' + " Clinical Care Contract mined!");
+            $("#clinicalCareHash").show().delay(5000).fadeOut();
             ctContractAddress = data[6];
-            initializeClinicalTrialEvents();
+            initializeClinicalCareEvents();
         }
     });
 
@@ -174,8 +180,8 @@ function acceptProposalId0() {
 }
 
 function addSubjects() {
-    var ct = ClinicalTrial.at(ctContractAddress);
-    document.getElementById("trialdiv").style.display = "block";
+    var ct = ClinicalCare.at(ctContractAddress);
+    document.getElementById("carediv").style.display = "block";
 
     function addSubjectTransaction(sub, currentValue) {
         var deferred = Q.defer();
@@ -217,7 +223,7 @@ function addSubjects() {
 
 
 function getSubjectById(currentValue) {
-    var ct = ClinicalTrial.at(ctContractAddress);
+    var ct = ClinicalCare.at(ctContractAddress);
     ct.getSubjectById(currentValue).then(function(_subjId) {
         var table = document.getElementById("subjecttable").getElementsByTagName('tbody')[0];
         var row = table.insertRow(0);
@@ -236,7 +242,7 @@ function getRandomInt(min, max) {
 }
 
 function addDataPoints() {
-    var ct = ClinicalTrial.at(ctContractAddress);
+    var ct = ClinicalCare.at(ctContractAddress);
 
     function addDataTransaction(_subjId, _json) {
         var deferred = Q.defer();
@@ -282,17 +288,17 @@ function addDataPoints() {
 }
 
 
-function readFromTrial(actor) {
-    var ct = ClinicalTrial.at(ctContractAddress);
+function readFromCare(actor) {
+    var ct = ClinicalCare.at(ctContractAddress);
 
     function readDataPoint(_patientIdx, _dataIdx, _patient) {
         var deferred1 = Q.defer();
         ct.getDataPointForSubject(_patientIdx, _dataIdx).then(function(data) {
             data[1] = hex2string(data[1]);
             if (actor == 'cro') {
-                $('#trialdatabody').append('<tr><td>' + "Dose/Units/Response/Side Effects - " + data[1] + " added at " + Date(data[0]) + '</td></tr>');
+                $('#caredatabody').append('<tr><td>' + "Dose/Units/Response/Side Effects - " + data[1] + " added at " + Date(data[0]) + '</td></tr>');
             } else {
-                $('#trialdatabodypharma').append('<tr><td>' + "Dose/Units/Response/Side Effects - " + data[1] + " added at " + Date(data[0]) + '</td></tr>');
+                $('#caredatabodypharma').append('<tr><td>' + "Dose/Units/Response/Side Effects - " + data[1] + " added at " + Date(data[0]) + '</td></tr>');
 
             }
             deferred1.resolve();
@@ -304,9 +310,9 @@ function readFromTrial(actor) {
         var deferred = Q.defer();
         ct.getSubjectById(_patientIdx).then(function(_patient) {
             if (actor == 'cro') {
-                $('#trialdatabody').append('<tr><td style="font-weight:bold">' + hex2string(_patient) + '</td></tr>');
+                $('#caredatabody').append('<tr><td style="font-weight:bold">' + hex2string(_patient) + '</td></tr>');
             } else {
-                $('#trialdatabodypharma').append('<tr><td style="font-weight:bold">' + hex2string(_patient) + '</td></tr>');
+                $('#caredatabodypharma').append('<tr><td style="font-weight:bold">' + hex2string(_patient) + '</td></tr>');
             }
             var promises = [];
             ct.getDataCounterForSubject(_patientIdx).then(function(_counterForPatient) {
@@ -366,7 +372,7 @@ function store() {
 
             res.forEach(function(file) {
                 console.log('successfully stored', file);
-                submitTrialProtocolDocument(file.path);
+                submitCareProtocolDocument(file.path);
                 display(file.path);
             })
         })
@@ -374,11 +380,11 @@ function store() {
     reader.readAsArrayBuffer(file)
 }
 
-function submitTrialProtocolDocument(docHash) {
+function submitCareProtocolDocument(docHash) {
     console.log(docHash);
-    regulatorInstance.submitTrialProtocolDocument.sendTransaction(0, docHash, { from: croAccount, gas: defaultGas }).then(
+    regulatorInstance.submitCareProtocolDocument.sendTransaction(0, docHash, { from: croAccount, gas: defaultGas }).then(
         function(txHash) {
-            console.log("Submitting trial protocal docHash into trial proposal ", txHash);
+            console.log("Submitting care protocal docHash into care proposal ", txHash);
             $("#uploadIpfsSuccess").html('<i class="fa fa-check"</i>' + ' IPFS Document Hash ' + docHash + " added to IPFS");
             $("#uploadIpfsSuccess").show().delay(7000).fadeOut();
             $("#uploadProtocalSuccess").html('<i class="fa fa-check"</i>' + ' Transaction ' + txHash + " added to the blockchain");
@@ -511,12 +517,12 @@ window.onload = function() {
         addDataPoints();
     });
 
-    $("#btnTrialData").click(function() {
-        readFromTrial('cro');
+    $("#btnCareData").click(function() {
+        readFromCare('cro');
     });
 
-    $("#btnTrialDataPharma").click(function() {
-        readFromTrial('pharma');
+    $("#btnCareDataPharma").click(function() {
+        readFromCare('pharma');
     });
 
     $("#modalClose").click(function() {
@@ -525,8 +531,8 @@ window.onload = function() {
 
 
     $(function() {
-        $("#datepickertrialfrom").datepicker();
-        $("#datepickertrialto").datepicker();
+        $("#datepickercarefrom").datepicker();
+        $("#datepickercareto").datepicker();
     });
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {

@@ -1,7 +1,7 @@
-var ClinicalTrial = artifacts.require("./ClinicalTrial.sol");
 var Regulator = artifacts.require("./Regulator.sol");
+var ServiceCenter = artifacts.require("./ServiceCenter.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(ClinicalTrial);
   deployer.deploy(Regulator);
+  deployer.deploy(ServiceCenter);
 };

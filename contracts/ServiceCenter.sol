@@ -28,27 +28,29 @@ contract ServiceCenter {
    mapping(bytes32 => DataPoint[]) data; // index sha3(subjectId)
 
    modifier amraOnly {
-      if(msg.sender != amra) {
-         throw;
+      if ( msg.sender != amra ) {
+         revert();
       }
       _;
    }
 
    modifier serviceIdOpen {
-      if( now < startDate || now > endDate ) {
-         throw;
+      if ( now < startDate || now > endDate ) {
+         revert();
       }
       _;
    }
 
    modifier dateBeforeStart {
-      if( now > startDate ) {
-         throw;
+      if ( now > startDate ) {
+         revert();
       }
       _;
    }
 
-   function ServiceCenter(address _regulator, address _amra, uint _proposalId, uint _startDate, uint _endDate, bytes32 _partNumber, bytes _ipfsHash) {
+   function ServiceCenter(address _regulator, address _amra, uint _proposalId, uint _startDate, uint _endDate, bytes32 _partNumber, bytes _ipfsHash)
+   public 
+   {
       amra = _amra;
       regulator = _regulator;
       proposalId = _proposalId;
@@ -59,20 +61,20 @@ contract ServiceCenter {
       createdDate = now;
    }
 
-   function getSubjectsCount() constant returns (uint _counter) {
+   function getSubjectsCount() constant public returns (uint _counter) {
       _counter = subjects.length;
    }
 
-   function getSubjectById(uint _id) constant returns (bytes32 _subject) {
-      if( _id >= subjects.length ) {
+   function getSubjectById(uint _id) constant public returns (bytes32 _subject) {
+      if ( _id >= subjects.length ) {
          _subject = "";
          return;
       }
       _subject = subjects[_id];
    }
 
-   function getDataCounterForSubject(uint _subjectId) constant returns (uint _counter) {
-      if( _subjectId >= subjects.length ) {
+   function getDataCounterForSubject(uint _subjectId) constant public returns (uint _counter) {
+      if ( _subjectId >= subjects.length ) {
          _counter = 0;
          return;
       }
@@ -80,23 +82,23 @@ contract ServiceCenter {
       _counter = data[ident].length;
    }
 
-   function getSubjectIdentById(uint _subjectId) constant returns (bytes32 _ident) {
-      if( _subjectId >= subjects.length ) {
+   function getSubjectIdentById(uint _subjectId) constant public returns (bytes32 _ident) {
+      if ( _subjectId >= subjects.length ) {
          _ident = "";
          return;
       }
-      _ident = sha3(subjects[_subjectId]);
+      _ident = keccak256(subjects[_subjectId]);
    }
 
-   function getDataPointForSubject(uint _subjectId, uint _dataPointId) constant returns (uint _timestamp, bytes32 _json) {
-      if( _subjectId >= subjects.length ) {
+   function getDataPointForSubject(uint _subjectId, uint _dataPointId) constant public returns (uint _timestamp, bytes32 _json) {
+      if ( _subjectId >= subjects.length ) {
          _timestamp = 0;
          _json = "";
          return;
       }
 
       bytes32 ident = getSubjectIdentById(_subjectId);
-      if(_dataPointId >= data[ident].length) {
+      if ( _dataPointId >= data[ident].length ) {
          _timestamp = 0;
          _json = "";
          return;
@@ -107,16 +109,16 @@ contract ServiceCenter {
    }
 
    // add modifier dateBeforeStart in the production release
-   function addSubject(bytes32 _subject) amraOnly returns (bool _success) {
+   function addSubject(bytes32 _subject) amraOnly public returns (bool _success) {
       subjects.push(_subject);
       AddSubject(msg.sender,_subject,block.timestamp);
       return true;
    }
 
    // add modifier serviceIdOpen in the production release
-   function addDataPoint(uint _subjectId, bytes32 _json) amraOnly serviceIdOpen returns (bool _success) {
-      if( _subjectId >= subjects.length ) {
-         throw;
+   function addDataPoint(uint _subjectId, bytes32 _json) amraOnly serviceIdOpen public returns (bool _success) {
+      if ( _subjectId >= subjects.length ) {
+         revert();
       }
 
       bytes32 ident = getSubjectIdentById(_subjectId);
